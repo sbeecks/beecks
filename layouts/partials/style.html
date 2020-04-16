@@ -1,0 +1,14 @@
+<style>
+
+////// amendments to bulma /////
+
+// <NAV class="navbar"> isn't transparent even if declared 'is-transparent' (must be a bug in Bulma)
+.navbar.is-transparent {
+  background: none;
+}
+
+// for <PRE>, Bulma doesn't define the width of the tab character:
+pre {-moz-tab-size: 2;} /* Firefox */
+pre {tab-size: 2;}
+
+</style>

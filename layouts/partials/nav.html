@@ -1,0 +1,125 @@
+{{/* There seems to be a bug preventing is-transparent on the main menu (in hero it works) */}}
+{{/* other formatting options: https://bulma.io/documentation/components/navbar/ */}}
+<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+	<div class="container">
+	  <div class="navbar-brand">
+	    <a class="navbar-item" href="/">
+	      {{ printf .Site.Params.logo | safeHTML }}
+	    </a>
+
+	    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+	      <span aria-hidden="true"></span>
+	      <span aria-hidden="true"></span>
+	      <span aria-hidden="true"></span>
+	    </a>
+	  </div>
+
+	  <div class="navbar-menu" id="mainNavbar">
+	    <div class="navbar-start">
+	    </div>
+
+	    <div class="navbar-end">
+
+				{{/* like sitemap, this range should better loop pages instead of the menu, 
+					and respect the related flags such as publishing date */}}
+				{{/* This would filter smarter, if navbar iterates pages, not menuitems: */}}
+				{{/* see https://gohugo.io/functions/where/#mainsections */}}
+				{{/* $pages := where site.RegularPages "Type" "in" site.Params.mainSections */}}					
+
+				{{/********** So here's the variant to iterate over MenuItems: *************/}}
+{{/* This generates a slice from the site parameter, without throwing a type error:
+				{{ $omitSections := ( slice "" ) }}
+				{{ with .Site.Params.notInMenu }}
+					{{ if reflect.IsSlice . }}
+						{{ $omitSections = . }}
+					{{ else }}
+						{{ $omitSections = ( slice . ) }}
+					{{ end }}
+				{{ end }}
+				{{ range $omitSections }}{{ . }}{{ end }}
+/*}}
+{{/* This loops through the "main" Menu unless it's a section to be omitted: }}	
+				{{ $theSections := where .Site.Menus.main "URL" "not in" $omitSections }} 
+				{{ range $theSections }}
+/*}}
+
+				{{/*********** This loops through the "main" Menu ... **************/}}	
+				{{ range .Site.Menus.main }}
+
+					{{/*********** ... and skips any URL in Param.notInMenu ************/}}	
+					{{ if in $.Site.Params.notInMenu ( trim .URL "/" ) }}
+{{/*  To test: omitted {{ .URL }}  */}}
+					{{ else }}
+						{{ $text := .Name | safeHTML }}
+						{{ if .HasChildren }}
+							<div class="navbar-item has-dropdown is-hoverable">
+								<a class="navbar-link" href="{{ .URL }}">{{ $text }}</a>
+
+								<ul class="navbar-dropdown">
+									{{ range .Children }}
+										<li>
+											<a class="navbar-item" href="{{ .URL }}">{{ .Name | safeHTML }}</a>
+										</li>
+									{{ end }}
+								</ul>
+							</div>
+
+						{{ else }}
+							<a class="navbar-item" href="{{ .URL }}">{{ $text }}</a>
+						{{ end }}
+					{{ end }}
+				{{ end }}
+			
+				{{ if ( .Site.Params.nav_buttons ) }}
+		      <div class="navbar-item">
+		        <div class="buttons">
+		          <a class="button is-primary">
+		            <strong>Sign up</strong>
+		          </a>
+		          <a class="button is-light">
+		            Log in
+		          </a>
+		        </div>
+					</div>
+				{{ end }}
+				
+				{{ if .IsTranslated }}
+					{{ range .Translations }}
+						<a class="navbar-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+					{{ end}}
+				{{ end }}
+								
+	    </div>
+		</div>
+	</div>
+</nav>
+
+{{/* UB disable this script when bulma.js is implemented */}}
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+
+	  // Get all "navbar-burger" elements
+	  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+	  // Check if there are any navbar burgers
+	  if ($navbarBurgers.length > 0) {
+
+	    // Add a click event on each of them
+	    $navbarBurgers.forEach( el => {
+	      el.addEventListener('click', () => {
+
+	        // Get the target from the "data-target" attribute
+	        const target = el.dataset.target;
+	        const $target = document.getElementById(target);
+
+	        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+	        el.classList.toggle('is-active');
+	        $target.classList.toggle('is-active');
+
+	      });
+	    });
+	  }
+
+	});
+
+</script>

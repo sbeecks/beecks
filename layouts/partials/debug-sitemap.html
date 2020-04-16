@@ -1,0 +1,23 @@
+<aside class="menu">
+	<p class="menu-label">Sitemap</p>
+		<ul class="menu-list">
+		{{ $currentPage := . }}
+		{{ range sort .Site.Pages "Kind" "Date" "desc" }} 
+			{{ $text := .Title  }}
+			{{ $isActive := (eq $currentPage . ) }}
+			{{ if .IsNode }}
+				<li><a class="{{ if $isActive }}is-active{{ end }}" href="{{ .Permalink }}">{{ .Kind }}: {{ $text }} &#10140;</a></li>
+				<li>
+					<ul class="menu-list">
+						{{ range .Pages }}
+							{{ $isActive := (eq $currentPage . ) }}
+							<li><a class="{{ if $isActive }}is-active{{ end }}" href="{{ .Permalink }}">{{ .Kind }}: {{ .Title }} {{ if .IsNode }}&#10140;{{ else }}&#9998;{{ end }}</a></li>
+							{{ end }}
+					</ul>
+				</li>	
+			{{ else }}
+				<a class="{{ if $isActive }}is-active{{ end }}" href="{{ .Permalink }}">{{ .Kind }}: {{ $text }} &#9998;</a>
+			{{ end }}
+		{{ end }}
+	</ul>
+</aside>

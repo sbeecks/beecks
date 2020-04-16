@@ -1,0 +1,17 @@
+{{ define "main" }}
+	<main class="container">
+		{{ .Content }}
+		<div class="content">
+			{{ range (.Paginator).Pages }}
+				<a href="{{.RelPermalink}}">
+				<article class="message">
+					<div class="message-header"><p>{{.Title }}</p></div>
+					<div class="message-body">{{ .Summary | markdownify }}</div>
+				</article></a>  
+			{{ end }}
+			{{ $paginator := .Paginate (where .Site.Pages "Type" "post") }}
+			{{ partial "pagination.html" (dict "p" $paginator "s" .Scratch) }}
+	</main>
+{{ end }}
+
+

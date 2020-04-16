@@ -1,0 +1,78 @@
+<!-- based on https://epsi-rns.gitlab.io/ssg/2019/04/19/hugo-bulma-pagination/ -->
+<!-- and completely refactored by @sbeecks for correct behaviour -->
+
+<nav class="pagination is-right" role="navigation" aria-label="pagination">
+  {{ $s := .s }}
+  {{ $p := .p }}
+
+  <!-- Number of links to show on either side of the current page, incl [...] -->
+  {{ $d := 2 }}
+
+  <!-- show pagination only if there's more than one page. -->
+  {{ if gt .p.TotalPages 1 }}
+
+    <!-- Previous Page. -->
+    {{ if .p.HasPrev }}
+      <a class="pagination-previous" href="{{ .p.Prev.URL }}" 
+         rel="prev">Previous</a>
+    {{ else }}
+      <a class="pagination-previous" title="This is the first page"
+         disabled>Previous</a>
+    {{ end }}
+
+    <!-- Next Page. -->
+    {{ if .p.HasNext }}
+      <a class="pagination-next" href="{{ .p.Next.URL }}" 
+         rel="next">Next</a>
+    {{ else }}
+      <a class="pagination-next" title="This is the last page"
+         disabled>Next</a>
+    {{ end }}
+
+		<!-- the numbers from 1 to max, with ellipses... -->
+     <ul class="pagination-list">
+
+    <!-- current Page number -->
+    {{- $current := $p.PageNumber -}}
+		{{ $a:= sub $current $d }}
+		{{ $b:= add $current $d }}
+
+		<!-- so let's loop $x through $p.Pagers, i.e. all pages -->
+    {{- range $p.Pagers -}}
+			{{ $x := .PageNumber }}
+
+			<!-- render numbers if $x is either =1, in ]a;b[, or =lastpage -->
+			{{ if ( eq $x 1 ) }}													{{ $s.Set "w" 1}}
+			{{ else if ( and (gt $x $a) (lt $x $b) ) }}		{{ $s.Set "w" 1}}
+			{{ else if ( eq $x $p.TotalPages ) }}					{{ $s.Set "w" 1}}
+			{{ else }}     <!-- show [...] if $x=$a or $x=$b -->
+				{{ if ( or (eq $x $a) (eq $x $b) ) }}				{{ $s.Set "w" 2}}
+				{{ else }}																	{{ $s.Set "w" 0}}
+				{{ end }}
+			{{ end }}
+
+			<!-- render numbers if $w=1; render [...] if $w=2; or render nothing -->
+      {{ if ( eq ($s.Get "w") 1 ) }}
+				<li>
+        	{{ if (eq $x $current) }} 
+		        <a class="pagination-link is-current" 
+		           aria-label="Page {{ .PageNumber }}">
+		          {{ .PageNumber }}
+		        </a>
+					{{ else }}
+		        <a href="{{ .URL }}" class="pagination-link" 
+		           aria-label="Goto page {{ .PageNumber }}">
+		          {{ .PageNumber }}
+		        </a>
+					{{ end }}
+				</li>
+      {{ else if ( eq ($s.Get "w") 2 ) }}
+				<li>
+        	<span class="pagination-ellipsis">&hellip;</span>
+      	</li>
+      {{ end }}
+		{{ end }}
+    </ul>
+		
+  {{ end }}
+</nav>

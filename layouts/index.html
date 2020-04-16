@@ -1,0 +1,12 @@
+{{ define "main" }}
+
+<section class="hero">
+	<div class="container">
+		<div class="hero-body">
+    	<h1 class="title">{{ .Site.Title }}</h1>
+			<p class="subtitle">{{ .Site.Params.homeText | markdownify }}</p>
+		</div>
+	</div>
+</section>
+
+{{ end }}

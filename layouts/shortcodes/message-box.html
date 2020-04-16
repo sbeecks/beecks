@@ -1,0 +1,9 @@
+<article class='message {{ .Get "color" }}'>
+  <div class="message-header">
+		{{ .Get "header" | markdownify }}
+		<button class="delete" aria-label="delete"></button>
+  </div>
+  <div class="message-body">
+{{ .Inner | markdownify }}
+ </div>
+</article>

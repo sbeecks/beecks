@@ -1,0 +1,8 @@
+<aside class="menu">
+	<p class="menu-label">.Site.Params</p>
+		<ul class="menu-list">
+		{{ range .Site.Params }} 
+			<a>{{ . }}</a>
+		{{ end }}
+	</ul>
+</aside>

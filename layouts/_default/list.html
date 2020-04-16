@@ -1,0 +1,7 @@
+{{ define "main" }}
+<div class="container">
+	<h1 class="title">{{ .Title }}</h1>
+	{{ partial "aside-pages.html" . }}
+	<div class="content">{{ .Content }}</div>
+<div>
+{{ end }}
