@@ -1,0 +1,10 @@
+<footer class="footer">
+	{{ if isset .Site.Params "sitemap" }}
+		{{ partial "debug-sitemap.html" . }}
+	{{ else }}
+	  <div class="content has-text-centered">
+		</div>		
+	{{ end }}
+</footer>
+
+

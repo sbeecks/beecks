@@ -46,9 +46,11 @@
 				{{/*********** This loops through the "main" Menu ... **************/}}	
 				{{ range .Site.Menus.main }}
 
-					{{/*********** ... and skips any URL in Param.notInMenu ************/}}	
-					{{ if in $.Site.Params.notInMenu ( trim .URL "/" ) }}
-{{/*  To test: omitted {{ .URL }}  */}}
+{{/*********** ... and skips any URL in Param.notInMenu ************/}}	
+	{{/*	{{ if in $.Site.Params.notInMenu ( trim .URL "/" ) }}
+	To test: omitted {{ .URL }}  
+*/}}
+					{{ if eq "" .URL }}
 					{{ else }}
 						{{ $text := .Name | safeHTML }}
 						{{ if .HasChildren }}
