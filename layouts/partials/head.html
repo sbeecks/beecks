@@ -12,7 +12,7 @@
 {{ $customVars := resources.Get "css/before-bulma.sass" }}
 {{ $personalStyle := resources.Get "css/after-bulma.sass" }}
 {{ $scssSlice := slice $customVars $bulma $personalStyle }}
-{{ $scss := slice ( resources.Get "css/before-bulma.sass" ) ( resources.Get "bulma/bulma.sass" ) ( resources.Get "css/after-bulma.sass" ) | resources.Concat "css/main.sass" }}
+{{ $scss := slice $customVars $bulma $personalStyle | resources.Concat "css/main.sass" }}
 
 {{ $options := (dict "outputStyle" "compressed" "includePaths" (slice "assets/bulma" "assets/bulma/sass" )) }}
 {{ $style := $scss | resources.ToCSS $options }}
