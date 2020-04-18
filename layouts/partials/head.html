@@ -9,10 +9,11 @@
 {{ end }}
 
 {{ $bulma := resources.Get "bulma/bulma.sass" }}
-{{ $customVars := resources.Get "css/before-bulma.sass" }}
-{{ $personalStyle := resources.Get "css/after-bulma.sass" }}
+{{ $mixins := resources.Get "sass/mixins.sass" }}
+{{ $customVars := resources.Get "sass/before-bulma.sass" }}
+{{ $personalStyle := resources.Get "sass/after-bulma.sass" }}
 {{ $scssSlice := slice $customVars $bulma $personalStyle }}
-{{ $scss := slice $customVars $bulma $personalStyle | resources.Concat "css/main.sass" }}
+{{ $scss := slice $mixins $customVars $bulma $personalStyle | resources.Concat "sass/main.sass" }}
 
 {{ $options := (dict "outputStyle" "compressed" "includePaths" (slice "assets/bulma" "assets/bulma/sass" )) }}
 {{ $style := $scss | resources.ToCSS $options }}

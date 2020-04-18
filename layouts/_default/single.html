@@ -1,6 +1,7 @@
 {{ define "main" }}
 
-<div class="container">
+{{/* is-fluid creats 32px padding inside the container */}}
+<div class="container is-fluid">
 	<h1 class="title">{{ .Title }}</h1>
 	<div class="content">{{ .Content }}</div>
 </div>
