@@ -1,4 +1,4 @@
-# github contents for "Go"
+# 1) github contents for "Go"
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -15,7 +15,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# Created by https://www.gitignore.io/api/osx
+# 2) .gitignore by https://www.gitignore.io/api/osx
 # Edit at https://www.gitignore.io/?templates=osx
 
 ### OSX ###
@@ -47,3 +47,15 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/osx
+
+# 3) more lines from other Hugo projects:
+# Hugo-generated assets
+public/
+resources/
+
+# npm assets
+node_modules/
+
+# parked images, exampleSite etc
+_no_git/
+exampleSite/

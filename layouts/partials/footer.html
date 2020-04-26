@@ -1,10 +1,13 @@
-<footer class="footer">
 	{{ if isset .Site.Params "sitemap" }}
+    <section style="background:white; padding: 48px; margin: 32px" class="container">
 		{{ partial "debug-sitemap.html" . }}
+    </section>
 	{{ else }}
+  <footer class="footer">
 	  <div class="content has-text-centered">
 		</div>		
+  </footer>
 	{{ end }}
-</footer>
+
 
 
